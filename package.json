@@ -1,0 +1,36 @@
+{
+  "name": "quasar",
+  "displayName": "Quasar",
+  "version": "1.0.0",
+  "description": "An all purpose discord bot",
+  "keywords": [
+    "discord",
+    "bot",
+    "quasar"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "update-patch": "npm version patch --no-git-tag-version",
+    "update-minor": "npm version minor --no-git-tag-version",
+    "update-major": "npm version major --no-git-tag-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BLM16/Quasar"
+  },
+  "author": {
+    "name": "Bradley Myers",
+    "url": "https://github.com/BLM16"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BLM16/Quasar/issues"
+  },
+  "homepage": "https://github.com/BLM16/Quasar#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "dotenv-safe": "^8.2.0"
+  }
+}
