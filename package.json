@@ -32,5 +32,9 @@
   "dependencies": {
     "discord.js": "^13.1.0",
     "dotenv-safe": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/dotenv-safe": "^8.1.2",
+    "@types/node": "^16.7.13"
   }
 }
