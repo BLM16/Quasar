@@ -12,9 +12,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "update-patch": "npm version patch --no-git-tag-version",
-    "update-minor": "npm version minor --no-git-tag-version",
-    "update-major": "npm version major --no-git-tag-version"
+    "update-patch": "npm version patch",
+    "update-minor": "npm version minor",
+    "update-major": "npm version major"
   },
   "repository": {
     "type": "git",
