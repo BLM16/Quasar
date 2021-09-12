@@ -11,8 +11,12 @@
         "sourceMap": false,
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": "src"
+        "baseUrl": "src",
+        "paths": {
+            "@models/*": ["models/*"],
+            "@commands/*": ["commands/*"]
+        }
     },
     "include": ["src"],
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules"]
 }

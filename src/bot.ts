@@ -1,5 +1,6 @@
+import ping from "@commands/util/ping";
 import { Client } from "discord.js";
-import { Presence } from "./config";
+import { defaultPrefix, Presence } from "./config";
 
 export class Bot {
     /** The discordjs client object */
@@ -12,13 +13,13 @@ export class Bot {
             intents: [
                 // "DIRECT_MESSAGES",
                 // "DIRECT_MESSAGE_REACTIONS",
-                // "GUILDS",
+                "GUILDS",
                 // "GUILD_BANS",
                 // "GUILD_EMOJIS_AND_STICKERS",
                 // "GUILD_INTEGRATIONS",
                 // "GUILD_INVITES",
                 // "GUILD_MEMBERS",
-                // "GUILD_MESSAGES",
+                "GUILD_MESSAGES",
                 // "GUILD_MESSAGE_REACTIONS",
                 // "GUILD_VOICE_STATES",
                 // "GUILD_WEBHOOKS"
@@ -41,6 +42,13 @@ export class Bot {
             });
 
             console.log(`${this.client.user.username} is online.`);
+        });
+
+        this.client.on("messageCreate", msg => {
+            if (msg.content.startsWith(defaultPrefix) && msg.content.slice(defaultPrefix.length).split(/ +/).shift().toLowerCase() == "ping") {
+                let p = new ping();
+                p.execute(msg, [], this.client);
+            }
         });
     }
 
