@@ -1,4 +1,4 @@
-import ping from "@commands/util/ping";
+import Ping from "@commands/util/ping";
 import { Client } from "discord.js";
 import { defaultPrefix, Presence } from "./config";
 
@@ -46,7 +46,7 @@ export class Bot {
 
         this.client.on("messageCreate", msg => {
             if (msg.content.startsWith(defaultPrefix) && msg.content.slice(defaultPrefix.length).split(/ +/).shift().toLowerCase() == "ping") {
-                let p = new ping();
+                let p = new Ping();
                 p.execute(msg, [], this.client);
             }
         });

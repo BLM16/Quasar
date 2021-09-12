@@ -1,7 +1,7 @@
 import { Client, Message } from "discord.js";
 import Command from "@models/command";
 
-export default class extends Command {
+export default class Ping implements Command {
     name = "Ping";
     description = "Pings the server";
     syntax = "ping";
