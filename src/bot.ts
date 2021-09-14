@@ -1,10 +1,14 @@
-import Ping from "@commands/util/ping";
-import { Client } from "discord.js";
+import Command from "@models/command";
+import { Client, Collection } from "discord.js";
+import { readdirSync } from "fs";
+import { join } from "path";
 import { defaultPrefix, Presence } from "./config";
 
 export class Bot {
     /** The discordjs client object */
     client: Client;
+    /** The collection of commands mapping Command.name to Command */
+    commands: Collection<string, Command> = new Collection();
 
     constructor() {
         this.client = new Client({
@@ -25,6 +29,26 @@ export class Bot {
                 // "GUILD_WEBHOOKS"
             ]
         });
+
+        // Loop through all the folders in the commands directory
+        readdirSync(join(__dirname, "commands"), { withFileTypes: true })
+            .filter(dir => dir.isDirectory())
+            .map(dir => dir.name)
+            .forEach(dir => {
+                // Loop through all the files in each command directory
+                readdirSync(join(__dirname, "commands", dir), { withFileTypes: true }).forEach(file => {
+                    // Get the command
+                    const F = require(join(__dirname, "commands", dir, file.name));
+                    const cmd: Command = new F.default;
+
+                    // Add the command and its aliases to the commands collection
+                    this.commands.set(cmd.name.toLowerCase(), cmd);
+                    if (cmd.aliases)
+                        cmd.aliases.forEach((alias: string) => {
+                            this.commands.set(alias.toLowerCase(), cmd);
+                        });
+                });
+            });
     }
 
     /**
@@ -42,12 +66,25 @@ export class Bot {
             });
 
             console.log(`${this.client.user.username} is online.`);
+            console.log(`Loaded ${this.commands.map(cmd => cmd).length} commands and aliases.`)
         });
 
         this.client.on("messageCreate", msg => {
-            if (msg.content.startsWith(defaultPrefix) && msg.content.slice(defaultPrefix.length).split(/ +/).shift().toLowerCase() == "ping") {
-                let p = new Ping();
-                p.execute(msg, [], this.client);
+            if (!msg.content.startsWith(defaultPrefix)) return;
+            if (msg.author.bot) return;
+
+            // Get the command and arguments
+            const args = msg.content.slice(defaultPrefix.length).split(/ +/);
+            const cmd  = args.shift().toLowerCase();
+
+            if (!this.commands.has(cmd)) return;
+
+            // Run the command
+            try {
+                this.commands.get(cmd).execute(msg, args, this.client);
+            } catch (e) {
+                msg.reply("we encountered an unexpected error while processing your command.");
+                console.error(e);
             }
         });
     }

@@ -1,4 +1,4 @@
-import { Client, Message } from "discord.js";
+import { Client, Message, MessageEmbed } from "discord.js";
 import Command from "@models/command";
 
 export default class Ping implements Command {
@@ -6,13 +6,19 @@ export default class Ping implements Command {
     description = "Pings the server";
     syntax = "ping";
     
-    execute(message: Message, args: string[], client: Client) {
-        // Time how long it takes to send a message
-        const start = Date.now();
-        message.channel.send("pong!").then(msg => {
-            const end = Date.now();
-            // Edit the reply to include the latency
-            msg.edit(`pong! \`${end - start}ms\``);
+    execute(message: Message, args: string[], client: Client): void {
+        message.channel.send({
+            embeds: [
+                new MessageEmbed()
+                .setColor(message.guild.members.cache.get(client.user.id).displayHexColor)
+                .setTitle("Pong!")
+                .setTimestamp()
+                .addFields([
+                    // Client latency from message to reply, API latency from websocket ping
+                    { name: "Client Latency:", value: `${Date.now() - message.createdTimestamp}ms`, inline: true },
+                    { name: "API Latency", value: `${Math.round(client.ws.ping)}ms`, inline: true }
+                ])
+            ]
         });
     }
 }

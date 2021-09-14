@@ -31,7 +31,8 @@
   "homepage": "https://github.com/BLM16/Quasar#readme",
   "dependencies": {
     "discord.js": "^13.1.0",
-    "dotenv-safe": "^8.2.0"
+    "dotenv-safe": "^8.2.0",
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.2",
