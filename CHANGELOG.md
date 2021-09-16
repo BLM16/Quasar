@@ -1,3 +1,7 @@
+## **[3.0.0]** - 2021-09-15
+* Extracted the command loader to the `util` folder to keep messy logic out of the main bot file
+* Re-ordered some imports to keep consistent
+
 ## **[2.0.0]** - 2021-09-13
 * Added an automatic command loader to load all command files
 * Added an avatar command to render a user's avatar

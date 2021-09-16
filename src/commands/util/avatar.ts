@@ -1,5 +1,5 @@
-import Command from "@models/command";
 import { Message, Client, User } from "discord.js";
+import Command from "@models/command";
 
 export default class Avatar implements Command {
     name = "Avatar";

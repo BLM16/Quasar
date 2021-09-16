@@ -1,8 +1,7 @@
 import Command from "@models/command";
 import { Client, Collection } from "discord.js";
-import { readdirSync } from "fs";
-import { join } from "path";
 import { defaultPrefix, Presence } from "./config";
+import LoadCommands from "@util/command_loader";
 
 export class Bot {
     /** The discordjs client object */
@@ -30,32 +29,16 @@ export class Bot {
             ]
         });
 
-        // Loop through all the folders in the commands directory
-        readdirSync(join(__dirname, "commands"), { withFileTypes: true })
-            .filter(dir => dir.isDirectory())
-            .map(dir => dir.name)
-            .forEach(dir => {
-                // Loop through all the files in each command directory
-                readdirSync(join(__dirname, "commands", dir), { withFileTypes: true }).forEach(file => {
-                    // Get the command
-                    const F = require(join(__dirname, "commands", dir, file.name));
-                    const cmd: Command = new F.default;
-
-                    // Add the command and its aliases to the commands collection
-                    this.commands.set(cmd.name.toLowerCase(), cmd);
-                    if (cmd.aliases)
-                        cmd.aliases.forEach((alias: string) => {
-                            this.commands.set(alias.toLowerCase(), cmd);
-                        });
-                });
-            });
+        // Load the commands into the bot
+        this.commands = LoadCommands();
     }
 
     /**
      * Subscribes to all the discord events the bot uses
      */
     public eventSubscriber(): void {
-        this.client.once('ready', () => {
+        // When the client logs in
+        this.client.once("ready", () => {
             // Set the bot's presence
             this.client.user.setPresence({
                 status: Presence.status,

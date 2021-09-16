@@ -14,7 +14,8 @@
         "baseUrl": "src",
         "paths": {
             "@models/*": ["models/*"],
-            "@commands/*": ["commands/*"]
+            "@commands/*": ["commands/*"],
+            "@util/*": ["util/*"]
         }
     },
     "include": ["src"],
