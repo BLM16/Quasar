@@ -1,4 +1,7 @@
-## **[4.0.0]** - 2021-09-15
+## **[4.1.0]** - 2021-09-18
+* Converted commands loader to be asynchronous
+
+## **[4.0.0]** - 2021-09-18
 * Extracted all the client events to the `events` folder to keep messy logic out of the main bot file
 
 ## **[3.0.0]** - 2021-09-15

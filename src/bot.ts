@@ -30,7 +30,7 @@ export class Bot {
         });
 
         // Load the commands into the bot
-        this.commands = LoadCommands();
+        LoadCommands().then(cmds => this.commands = cmds);
     }
 
     /**

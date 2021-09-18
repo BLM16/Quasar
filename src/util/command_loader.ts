@@ -10,7 +10,7 @@ const commandFolderPath = join(__dirname, "..", "commands");
  * Maps all the command files in the commands directory to names and aliases
  * @returns A {@link Collection} of mapped commands
  */
-export default function LoadCommands(): Collection<string, Command> {
+export default async function LoadCommands(): Promise<Collection<string, Command>> {
     const commands = new Collection<string, Command>();
 
     let cmdCount = 0,
