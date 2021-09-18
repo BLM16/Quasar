@@ -15,7 +15,7 @@ export default class Ping implements Command {
                 .setTimestamp()
                 .addFields([
                     // Client latency from message to reply, API latency from websocket ping
-                    { name: "Client Latency:", value: `${Date.now() - message.createdTimestamp}ms`, inline: true },
+                    { name: "Client Latency", value: `${Date.now() - message.createdTimestamp}ms`, inline: true },
                     { name: "API Latency", value: `${Math.round(client.ws.ping)}ms`, inline: true }
                 ])
             ]
