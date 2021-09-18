@@ -13,6 +13,9 @@ const commandFolderPath = join(__dirname, "..", "commands");
 export default function LoadCommands(): Collection<string, Command> {
     const commands = new Collection<string, Command>();
 
+    let cmdCount = 0,
+        aliasCount = 0;
+
     // Loop through all the folders in the commands directory
     getCommandFolders().forEach(dir => {
         // Loop through all the files in each command directory
@@ -20,16 +23,19 @@ export default function LoadCommands(): Collection<string, Command> {
             // Get the command
             const F = require(join(commandFolderPath, dir, file.name));
             const cmd: Command = new F.default;
+            cmdCount++;
 
             // Add the command and its aliases to the commands collection
             commands.set(cmd.name.toLowerCase(), cmd);
             if (cmd.aliases)
                 cmd.aliases.forEach((alias: string) => {
                     commands.set(alias.toLowerCase(), cmd);
+                    aliasCount++;
                 });
         });
     });
 
+    console.log(`Loaded ${cmdCount} commands, and ${aliasCount} aliases.`);
     return commands;
 }
 

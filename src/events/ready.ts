@@ -16,5 +16,4 @@ export default function(BOT: Bot): void {
     });
 
     console.log(`${BOT.client.user.username} is online.`);
-    console.log(`Loaded ${BOT.commands.map(cmd => cmd).length} commands and aliases.`);
 }
