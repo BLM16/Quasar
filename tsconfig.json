@@ -13,9 +13,11 @@
         "rootDir": "src",
         "baseUrl": "src",
         "paths": {
+            "@/*": ["./*"],
             "@models/*": ["models/*"],
             "@commands/*": ["commands/*"],
-            "@util/*": ["util/*"]
+            "@util/*": ["util/*"],
+            "@events/*": ["events/*"]
         }
     },
     "include": ["src"],

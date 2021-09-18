@@ -1,7 +1,7 @@
-import Command from "@models/command";
 import { Client, Collection } from "discord.js";
-import { defaultPrefix, Presence } from "./config";
+import Command from "@models/command";
 import LoadCommands from "@util/command_loader";
+import * as events from "@events/index";
 
 export class Bot {
     /** The discordjs client object */
@@ -37,39 +37,8 @@ export class Bot {
      * Subscribes to all the discord events the bot uses
      */
     public eventSubscriber(): void {
-        // When the client logs in
-        this.client.once("ready", () => {
-            // Set the bot's presence
-            this.client.user.setPresence({
-                status: Presence.status,
-                activities: [{
-                    name: Presence.activity,
-                    type: Presence.type
-                }],
-            });
-
-            console.log(`${this.client.user.username} is online.`);
-            console.log(`Loaded ${this.commands.map(cmd => cmd).length} commands and aliases.`)
-        });
-
-        this.client.on("messageCreate", msg => {
-            if (!msg.content.startsWith(defaultPrefix)) return;
-            if (msg.author.bot) return;
-
-            // Get the command and arguments
-            const args = msg.content.slice(defaultPrefix.length).split(/ +/);
-            const cmd  = args.shift().toLowerCase();
-
-            if (!this.commands.has(cmd)) return;
-
-            // Run the command
-            try {
-                this.commands.get(cmd).execute(msg, args, this.client);
-            } catch (e) {
-                msg.reply("we encountered an unexpected error while processing your command.");
-                console.error(e);
-            }
-        });
+        this.client.once("ready", () => events.ready(this));
+        this.client.on("messageCreate", msg => events.messageCreate(msg, this));
     }
 
     /**

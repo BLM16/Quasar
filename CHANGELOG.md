@@ -1,3 +1,6 @@
+## **[4.0.0]** - 2021-09-15
+* Extracted all the client events to the `events` folder to keep messy logic out of the main bot file
+
 ## **[3.0.0]** - 2021-09-15
 * Extracted the command loader to the `util` folder to keep messy logic out of the main bot file
 * Re-ordered some imports to keep consistent
