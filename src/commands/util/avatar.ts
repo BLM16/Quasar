@@ -1,11 +1,15 @@
 import { Message, Client, User } from "discord.js";
 import Command from "@models/command";
+import { PermissionsFrom } from "@util/array_helper";
 
 export default class Avatar implements Command {
     name = "Avatar";
     description = "Shows a user\'s avatar";
     syntax = "avatar <@user | user_id>?";
     aliases = ["pfp", "pic", "img"];
+
+    perms = PermissionsFrom("ATTACH_FILES", "USE_APPLICATION_COMMANDS");
+    guildOnly = false;
 
     execute(message: Message, args: string[], client: Client): void {
         let target: User = undefined;

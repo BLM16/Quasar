@@ -1,11 +1,15 @@
 import { Client, Message, MessageEmbed } from "discord.js";
 import Command from "@models/command";
+import { PermissionsFrom } from "@util/array_helper";
 
 export default class Ping implements Command {
     name = "Ping";
     description = "Pings the server";
     syntax = "ping";
     
+    perms = PermissionsFrom("USE_APPLICATION_COMMANDS");
+    guildOnly = false;
+
     execute(message: Message, args: string[], client: Client): void {
         message.channel.send({
             embeds: [

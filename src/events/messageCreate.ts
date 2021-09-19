@@ -19,9 +19,33 @@ export default function(msg: Message, BOT: Bot): void {
 
     // Run the command
     try {
-        BOT.commands.get(cmd).execute(msg, args, BOT.client);
+        // Get the command itself
+        const C = BOT.commands.get(cmd);
+
+        const isDM = msg.member == null; // Message sent in DM?
+        const guildOnly = C.guildOnly; // Command only runnable in a guild?
+        const perms = C.perms; // The permissions required to run the command in a guild
+
+        if (isDM && guildOnly) msg.reply("You can only run this command in a guild");
+        else if (isDM) C.execute(msg, args, BOT.client);
+        else {
+            let flag = false; // Is there a problem running the command
+
+            // Make sure the user has the required permissions to run the command
+            perms.forEach(perm => {
+                if (!msg.member.permissions.has(perm)) {
+                    msg.reply("You don\'t have adequate permissions to run this command.");
+                    flag = true;
+                }
+            });
+
+            /// TODO: Check if user has proper ranks too
+
+            if (!flag)
+                C.execute(msg, args, BOT.client);
+        }
     } catch (e) {
-        msg.reply("we encountered an unexpected error while processing your command.");
+        msg.reply("We encountered an unexpected error while processing your command.");
         console.error(e);
     }
 }

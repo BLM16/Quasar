@@ -1,3 +1,7 @@
+## **[4.2.0]** - 2021-09-18
+* Added permission checks for commands
+* Added a `guildOnly` flag to all commands to ensure all parameters will exist when needed
+
 ## **[4.1.0]** - 2021-09-18
 * Converted commands loader to be asynchronous
 
