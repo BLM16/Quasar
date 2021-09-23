@@ -14,7 +14,7 @@ export class Bot {
             // TODO: Update intents as needed
             // https://discord.com/developers/docs/topics/gateway#list-of-intents
             intents: [
-                // "DIRECT_MESSAGES",
+                "DIRECT_MESSAGES",
                 // "DIRECT_MESSAGE_REACTIONS",
                 "GUILDS",
                 // "GUILD_BANS",
@@ -26,6 +26,11 @@ export class Bot {
                 // "GUILD_MESSAGE_REACTIONS",
                 // "GUILD_VOICE_STATES",
                 // "GUILD_WEBHOOKS"
+            ],
+            // TODO: Update partials as needed
+            // https://discordjs.guide/popular-topics/partials.html
+            partials: [
+                "CHANNEL"
             ]
         });
 

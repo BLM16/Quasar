@@ -14,7 +14,7 @@ export default class Ping implements Command {
         message.channel.send({
             embeds: [
                 new MessageEmbed()
-                .setColor(message.guild.members.cache.get(client.user.id).displayHexColor)
+                .setColor(message.channel.type == "DM" ? 0x8c3d1e : message.guild.members.cache.get(client.user.id).displayHexColor)
                 .setTitle("Pong!")
                 .setTimestamp()
                 .addFields([

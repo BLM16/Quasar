@@ -1,3 +1,7 @@
+## **[4.2.1]** - 2021-09-22
+* Enabled the channels partial to recieve DMs
+* Converted the `messageCreate` DM check to use the `Message.channel.type` instead of checking for a guild
+
 ## **[4.2.0]** - 2021-09-18
 * Added permission checks for commands
 * Added a `guildOnly` flag to all commands to ensure all parameters will exist when needed

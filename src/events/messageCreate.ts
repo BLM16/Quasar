@@ -22,7 +22,7 @@ export default function(msg: Message, BOT: Bot): void {
         // Get the command itself
         const C = BOT.commands.get(cmd);
 
-        const isDM = msg.member == null; // Message sent in DM?
+        const isDM = msg.channel.type == "DM"; // Message sent in DM?
         const guildOnly = C.guildOnly; // Command only runnable in a guild?
         const perms = C.perms; // The permissions required to run the command in a guild
 
