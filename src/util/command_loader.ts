@@ -1,7 +1,7 @@
 import Collection from "@discordjs/collection";
-import Command from "@models/command";
 import { readdirSync } from "fs";
 import { join } from "path";
+import Command from "@models/command";
 
 /** The path to the commands folder */
 const commandFolderPath = join(__dirname, "..", "commands");
@@ -28,7 +28,7 @@ export default async function LoadCommands(): Promise<Collection<string, Command
             // Add the command and its aliases to the commands collection
             commands.set(cmd.name.toLowerCase(), cmd);
             if (cmd.aliases)
-                cmd.aliases.forEach((alias: string) => {
+                cmd.aliases.forEach(alias => {
                     commands.set(alias.toLowerCase(), cmd);
                     aliasCount++;
                 });

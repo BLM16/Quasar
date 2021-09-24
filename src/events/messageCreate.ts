@@ -27,7 +27,7 @@ export default function(msg: Message, BOT: Bot): void {
         const perms = C.perms; // The permissions required to run the command in a guild
 
         if (isDM && guildOnly) msg.reply("You can only run this command in a guild");
-        else if (isDM) C.execute(msg, args, BOT.client);
+        else if (isDM) C.execute(msg, args, BOT);
         else {
             let flag = false; // Is there a problem running the command
 
@@ -42,7 +42,7 @@ export default function(msg: Message, BOT: Bot): void {
             /// TODO: Check if user has proper ranks too
 
             if (!flag)
-                C.execute(msg, args, BOT.client);
+                C.execute(msg, args, BOT);
         }
     } catch (e) {
         msg.reply("We encountered an unexpected error while processing your command.");

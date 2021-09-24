@@ -1,6 +1,7 @@
-import { Message, Client, User } from "discord.js";
+import { Message, User } from "discord.js";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
+import { Bot } from "@/bot";
 
 export default class Avatar implements Command {
     name = "Avatar";
@@ -11,7 +12,7 @@ export default class Avatar implements Command {
     perms = PermissionsFrom("ATTACH_FILES", "USE_APPLICATION_COMMANDS");
     guildOnly = false;
 
-    execute(message: Message, args: string[], client: Client): void {
+    execute(message: Message, args: string[], BOT: Bot): void {
         let target: User = undefined;
 
         // Handles a mention
@@ -19,10 +20,11 @@ export default class Avatar implements Command {
             target = message.mentions.users.first();
 
         // Handles a user_id
-        else if (message.guild != null)
+        else if (message.guild != null) {
             message.guild.members.fetch(args[0]).then(member => {
                 target = member.user;
             }).catch(() => { });
+        }
 
         // Default to the message author
         if (target == undefined)

@@ -1,4 +1,5 @@
-import { Client, Message, Permissions } from "discord.js";
+import { Message, Permissions } from "discord.js";
+import { Bot } from "@/bot";
 
 /** The template for all commands to ensure required properties */
 export default interface Command {
@@ -10,5 +11,5 @@ export default interface Command {
     readonly perms: Permissions[];
     readonly guildOnly: Boolean;
     
-    execute(message: Message, args: string[], client: Client): void;
+    execute(message: Message, args: string[], BOT: Bot): void;
 }
