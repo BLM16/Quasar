@@ -4,12 +4,20 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      - 'node_modules/**'
+      - '**/*.md'
+      - '**/*.txt'
+    paths:
+      - 'src/**'
+      - '**/*.js'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
     paths-ignore:
-      - 'node_modules'
+      - '**/*.md'
+      - '**/*.txt'
+    paths:
+      - 'src/**'
+      - '**/*.js'
   schedule:
     - cron: '27 10 * * 3'
 
