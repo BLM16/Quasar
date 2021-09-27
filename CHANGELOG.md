@@ -1,3 +1,8 @@
+## **[4.3.0]** - 2021-09-26
+* Added CodeQL Analysis code checking GitHub workflow
+* Added security doc files to tell people how to report security vulnerabilities
+* Added a contributing file outlining how to contribute to the project
+
 ## **[4.2.1]** - 2021-09-22
 * Enabled the channels partial to recieve DMs
 * Converted the `messageCreate` DM check to use the `Message.channel.type` instead of checking for a guild
