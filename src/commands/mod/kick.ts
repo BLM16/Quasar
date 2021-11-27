@@ -1,6 +1,7 @@
 import { Guild, GuildMember, Message } from "discord.js";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
+import GetMember from "@util/member_helper";
 import { Bot } from "@/bot";
 
 export default class Kick implements Command {
@@ -12,9 +13,9 @@ export default class Kick implements Command {
     guildOnly = true;
 
     execute(message: Message, args: string[], BOT: Bot): void {
-        const member = message.mentions.members.first() || this.getMember(message.guild, args[0]);
+        const member = message.mentions.members.first() || GetMember(message.guild, args[0]);
         args.shift();
-        let reason = args.join(' ') || "No reason provided";
+        const reason = args.join(' ') || "No reason provided";
 
         if (!member)
             return void(message.reply("That user does not exist!"));
@@ -30,20 +31,6 @@ export default class Kick implements Command {
 
         member.kick(reason)
             .then(m => message.reply(`Kicked \`${m.user.tag}\` with reason: \`${reason}\``))
-            .catch(() => message.reply(`An unexpected error occured, please try again.`));
-    }
-
-    /**
-     * Gets a GuildMember from an id
-     * @param guild The guild to fetch the member from
-     * @param find The key to find the user with
-     * @returns The matched GuildMember
-     */
-    getMember = (guild: Guild, find: string): GuildMember => {
-        let gm = guild.members.cache.get(find);
-        if (gm == null)
-            guild.members.fetch(find).then(m => gm = m);
-
-        return gm;
+            .catch(() => message.reply("An unexpected error occured, please try again."));
     }
 }

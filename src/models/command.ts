@@ -11,5 +11,11 @@ export default interface Command {
     readonly perms: Permissions[];
     readonly guildOnly: Boolean;
     
+    /**
+     * The function to call when the command is run
+     * @param message The message that was sent
+     * @param args The arguments passed to the command
+     * @param BOT The {@link Bot} instance
+     */
     execute(message: Message, args: string[], BOT: Bot): void;
 }
