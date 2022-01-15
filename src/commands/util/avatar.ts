@@ -1,34 +1,35 @@
 import { Message, User } from "discord.js";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
+import GetMember from "@util/member_helper";
 import { Bot } from "@/bot";
 
 export default class Avatar implements Command {
     name = "Avatar";
     description = "Shows a user\'s avatar";
     syntax = "avatar <@user | user_id>?";
-    aliases = ["pfp", "pic", "img"];
+    aliases = ["pfp", "pic", "img", "av"];
 
     perms = PermissionsFrom("ATTACH_FILES", "USE_APPLICATION_COMMANDS");
     guildOnly = false;
 
     execute(message: Message, args: string[], BOT: Bot): void {
-        let target: User = undefined;
+        let target: User;
 
-        // Handles a mention
-        if (message.mentions.users.first() != undefined)
+        if (message.mentions.users.first()) {
             target = message.mentions.users.first();
-
-        // Handles a user_id
-        else if (message.guild != null) {
-            message.guild.members.fetch(args[0]).then(member => {
-                target = member.user;
-            }).catch(() => { });
         }
-
-        // Default to the message author
-        if (target == undefined)
+        else if (!args[0]) {
             target = message.author;
+        }
+        else if (message.channel.type == "DM") {
+            target = args[0] == BOT.client.user.id
+                ? BOT.client.user
+                : message.author
+        }
+        else {
+            target = GetMember(message.guild, args[0]).user;
+        }
 
         // Send the avatar of the target
         message.channel.send(

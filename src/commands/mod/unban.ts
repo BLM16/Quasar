@@ -1,4 +1,4 @@
-import { Message, Guild, GuildMember } from "discord.js";
+import { Message } from "discord.js";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
 import GetMember from "@util/member_helper";
