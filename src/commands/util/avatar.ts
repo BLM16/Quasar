@@ -1,4 +1,5 @@
-import { Message, User } from "discord.js";
+import { CommandInteraction, Message, User } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
 import GetMember from "@util/member_helper";
@@ -34,6 +35,22 @@ export default class Avatar implements Command {
         // Send the avatar of the target
         message.channel.send(
             target.displayAvatarURL({
+                dynamic: true,
+                size: 1024
+            })
+        );
+    }
+
+    SlashCommand = new SlashCommandBuilder()
+        .setName(this.name.toLowerCase())
+        .setDescription(this.description)
+        .addUserOption(o => o.setName("user").setDescription("The user to get the avatar of").setRequired(false));
+
+    executeSlash(interaction: CommandInteraction, BOT: Bot): void {
+        let user = interaction.options.getUser("user") || interaction.user;
+
+        interaction.reply(
+            user.displayAvatarURL({
                 dynamic: true,
                 size: 1024
             })

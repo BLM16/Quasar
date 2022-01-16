@@ -30,6 +30,8 @@
   },
   "homepage": "https://github.com/BLM16/Quasar#readme",
   "dependencies": {
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
     "discord.js": "^13.1.0",
     "dotenv-safe": "^8.2.0",
     "fs": "^0.0.1-security"

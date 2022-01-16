@@ -1,3 +1,6 @@
+## **[5.0.0]** - 2022-01-15
+* Added support for application slash commands
+
 ## **[4.3.0]** - 2021-09-26
 * Added CodeQL Analysis code checking GitHub workflow
 * Added security doc files to tell people how to report security vulnerabilities

@@ -1,4 +1,6 @@
 import { Client, Collection } from "discord.js";
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
 import Command from "@models/command";
 import LoadCommands from "@util/command_loader";
 import * as events from "@events/index";
@@ -8,6 +10,8 @@ export class Bot {
     client: Client;
     /** The collection of commands mapping Command.name to Command */
     commands: Collection<string, Command> = new Collection();
+    /** The REST API to communicate with */
+    rest = new REST({ version: "9" }).setToken(process.env.TOKEN!);
 
     constructor() {
         this.client = new Client({
@@ -35,7 +39,11 @@ export class Bot {
         });
 
         // Load the commands into the bot
-        LoadCommands().then(cmds => this.commands = cmds);
+        LoadCommands().then(cmds => {
+            this.commands = cmds;
+            this.registerSlashCommands(
+                new Array(...new Set(cmds.map(c => c.SlashCommand).filter(c => c !== undefined))));
+        });
     }
 
     /**
@@ -44,6 +52,19 @@ export class Bot {
     public eventSubscriber(): void {
         this.client.once("ready", () => events.ready(this));
         this.client.on("messageCreate", msg => events.messageCreate(msg, this));
+        this.client.on("interactionCreate", interaction => events.interactionCreate(interaction, this));
+    }
+
+    /**
+     * Registers the bot's slash commands with the Discord API
+     */
+    public async registerSlashCommands(cmds: object[]) {
+        /// TODO: Check if production and change to applicationCommands. Change back to applicationGuildCommands for testing.
+        /// TODO: Look into slash command permissions: https://discordjs.guide/interactions/slash-command-permissions.html#user-permissions
+        /// TODO: Migrate slash commands to a separate class in the same file so they can access the commands for things like help menu options
+        await this.rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), { body: cmds })
+            .then(() => console.log(`Loaded ${cmds.length} slash commands.`))
+            .catch(e => console.error(e));
     }
 
     /**

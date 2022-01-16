@@ -12,12 +12,9 @@ Install all dependencies from a terminal in the root of the project:
 npm install
 ```
 
-Create a new app [here](https://discord.com/developers/applications) and add a bot to the application. Make sure to enable `server members intent`. Using the OAuth2 tab, set the scope to bot, the bot permissions to the desired settings (Administrator in the case of Quasar), and follow the generated link to add your bot to a server.
+Create a new app [here](https://discord.com/developers/applications) and add a bot to the application. Make sure to enable `server members intent`. Using the OAuth2 > URL Generator, select `bot` and `application.commands`, set the bot permissions to the desired settings (Administrator in the case of Quasar), and follow the generated link to add your bot to a server.
 
-Create a `.env` file in the root of the project and copy your bot token from the bot tab in the discord developer portal. The file should have the contents:
-```env
-TOKEN=<paste your bot token here>
-```
+Create a `.env` file in the root of the project and fill it out following the structure of the `.env.example` file. Your bot token can be found under the bot tab of the developer portal, and the client/application id from the general tab.
 
 ## NPM Scripts
 
