@@ -5,7 +5,7 @@ Quasar
 
 ## Setup
 
-**Make sure you have `Node.js` v16 and `npm` v7 installed.**
+**Make sure you have `Node.js` v16 and `npm` v8 installed.**
 
 Install all dependencies from a terminal in the root of the project:
 ```bat
@@ -25,4 +25,5 @@ Create a `.env` file in the root of the project and fill it out following the st
 | update-{type} | Updates the node package's {type} version |
 
 ## License
-This code is licensed under the [MIT License](./LICENSE)
+
+This code is licensed under the [MIT License](./LICENSE).

@@ -1,34 +1,26 @@
-import { CommandInteraction, HexColorString, Message, MessageEmbed } from "discord.js";
+import { Bot } from "@/bot";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
-import { Bot } from "@/bot";
+import { CommandInteraction, HexColorString, MessageEmbed } from "discord.js";
 
 export default class Info implements Command {
     name = "Info";
     description = "Sends info about the bot";
-    syntax = "info";
-    aliases = ["inf", "invite", "repo", "gh", "link", "git", "bug", "issues"];
 
     perms = PermissionsFrom("USE_APPLICATION_COMMANDS");
     guildOnly = false;
 
-    execute(message: Message, args: string[], BOT: Bot): void {
-        message.channel.send({
-            embeds: [ this.getEmbed(message.channel.type == "DM" ? 0x8c3d1e : message.guild.me.displayHexColor) ]
-        });
-    }
-            
     SlashCommand = new SlashCommandBuilder()
         .setName(this.name.toLowerCase())
         .setDescription(this.description);
-        
+
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         interaction.reply({
-            embeds: [ this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor) ]
+            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor)]
         });
     }
-            
+
     getEmbed = (color: number | HexColorString) => {
         return new MessageEmbed()
             .setColor(color)

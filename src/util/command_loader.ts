@@ -1,7 +1,7 @@
 import Collection from "@discordjs/collection";
+import Command from "@models/command";
 import { readdirSync } from "fs";
 import { join } from "path";
-import Command from "@models/command";
 
 /** The path to the commands folder */
 const commandFolderPath = join(__dirname, "..", "commands");
@@ -25,17 +25,11 @@ export default async function LoadCommands(): Promise<Collection<string, Command
             const cmd: Command = new F.default;
             cmdCount++;
 
-            // Add the command and its aliases to the commands collection
+            // Add the command to the commands collection
             commands.set(cmd.name.toLowerCase(), cmd);
-            if (cmd.aliases)
-                cmd.aliases.forEach(alias => {
-                    commands.set(alias.toLowerCase(), cmd);
-                    aliasCount++;
-                });
         });
     });
 
-    console.log(`Loaded ${cmdCount} commands, and ${aliasCount} aliases.`);
     return commands;
 }
 
@@ -44,6 +38,6 @@ export default async function LoadCommands(): Promise<Collection<string, Command
  */
 function getCommandFolders(): string[] {
     return readdirSync(commandFolderPath, { withFileTypes: true })
-            .filter(dir => dir.isDirectory())
-            .map(dir => dir.name)
+        .filter(dir => dir.isDirectory())
+        .map(dir => dir.name)
 }

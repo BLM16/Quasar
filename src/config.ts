@@ -1,4 +1,5 @@
-import { ActivityType, PresenceStatusData } from "discord.js";
+import { ExcludeEnum, PresenceStatusData } from "discord.js";
+import { ActivityTypes } from "discord.js/typings/enums";
 
 /** The default prefix for the bot */
 export const defaultPrefix = ".";
@@ -6,6 +7,6 @@ export const defaultPrefix = ".";
 /** The presence activity of the bot */
 export class Presence {
     static status: PresenceStatusData = "online";
-    static type: ActivityType = "WATCHING";
+    static type: ExcludeEnum<typeof ActivityTypes, "CUSTOM"> = "WATCHING";
     static activity: string = "The Universe";
 }

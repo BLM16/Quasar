@@ -1,22 +1,15 @@
-import { CommandInteraction, HexColorString, Message, MessageEmbed } from "discord.js";
+import { Bot } from "@/bot";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
-import { Bot } from "@/bot";
+import { CommandInteraction, HexColorString, MessageEmbed } from "discord.js";
 
 export default class Ping implements Command {
     name = "Ping";
     description = "Pings the server";
-    syntax = "ping";
-    
+
     perms = PermissionsFrom("USE_APPLICATION_COMMANDS");
     guildOnly = false;
-
-    execute(message: Message, args: string[], BOT: Bot): void {
-        message.channel.send({
-            embeds: [ this.getEmbed(message.channel.type == "DM" ? 0x8c3d1e : message.guild.me.displayHexColor, message.createdTimestamp, BOT) ]
-        });
-    }
 
     SlashCommand = new SlashCommandBuilder()
         .setName(this.name.toLowerCase())
@@ -24,7 +17,7 @@ export default class Ping implements Command {
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         interaction.reply({
-            embeds: [ this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor, interaction.createdTimestamp, BOT) ],
+            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor, interaction.createdTimestamp, BOT)],
             ephemeral: true
         });
     }

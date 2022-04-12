@@ -1,39 +1,15 @@
-import { CommandInteraction, Message } from "discord.js";
+import { Bot } from "@/bot";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import Command from "@models/command";
 import { PermissionsFrom } from "@util/array_helper";
-import GetMember from "@util/member_helper";
-import { Bot } from "@/bot";
+import { CommandInteraction } from "discord.js";
 
 export default class Kick implements Command {
     name = "Kick";
     description = "Kicks a user from the guild";
-    syntax = "kick <user | userid> <reason>?";
 
     perms = PermissionsFrom("KICK_MEMBERS", "USE_APPLICATION_COMMANDS");
     guildOnly = true;
-
-    execute(message: Message, args: string[], BOT: Bot): void {
-        const member = message.mentions.members.first() || GetMember(message.guild, args[0]);
-        args.shift();
-        const reason = args.join(' ') || "No reason provided";
-
-        if (!member)
-            return void(message.reply("That user does not exist!"));
-
-        if (member.id == message.member.id)
-            return void(message.react('😂').then(() => message.reply("You can't kick yourself silly!")));
-
-        if (!member.kickable)
-            return void(message.reply("I cannot kick that user!"));
-
-        if (member.roles.highest.comparePositionTo(message.member.roles.highest) >= 0)
-            return void(message.reply("You don\'t have adequate permissions to kick that user!"));
-
-        member.kick(reason)
-            .then(m => message.reply(`Kicked \`${m.user.tag}\` with reason: \`${reason}\``))
-            .catch(() => message.reply("An unexpected error occured, please try again."));
-    }
 
     SlashCommand = new SlashCommandBuilder()
         .setName(this.name.toLowerCase())
@@ -45,14 +21,14 @@ export default class Kick implements Command {
         const user = interaction.options.getUser("user", false);
         interaction.guild.members.fetch(user).then(member => {
             if (member.id == interaction.member.user.id)
-                return void(interaction.reply({ content: "😂 You can't kick yourself silly!", ephemeral: true }));
-            
+                return void (interaction.reply({ content: "😂 You can't kick yourself silly!", ephemeral: true }));
+
             if (!member.kickable)
-                return void(interaction.reply({ content: "I cannot kick that user!", ephemeral: true }));
+                return void (interaction.reply({ content: "I cannot kick that user!", ephemeral: true }));
 
             const invoker = interaction.guild.members.cache.get(interaction.member.user.id);
             if (member.roles.highest.comparePositionTo(invoker.roles.highest) >= 0)
-                return void(interaction.reply({ content: "You don\'t have adequate permissions to kick that user!", ephemeral: true }));
+                return void (interaction.reply({ content: "You don\'t have adequate permissions to kick that user!", ephemeral: true }));
 
             const reason = interaction.options.getString("reason", false) || "No reason provided";
             member.kick(reason)

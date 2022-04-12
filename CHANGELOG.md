@@ -1,3 +1,7 @@
+## **[5.1.0]** - 2022-04-11
+* Added mute and unmute commands
+* Now only uses slash commands to meet Discord's bot changes
+
 ## **[5.0.0]** - 2022-01-15
 * Added support for application slash commands
 
