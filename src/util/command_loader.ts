@@ -1,4 +1,4 @@
-import Collection from "@discordjs/collection";
+import { Collection } from "discord.js";
 import Command from "@models/command";
 import { readdirSync } from "fs";
 import { join } from "path";

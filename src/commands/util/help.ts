@@ -18,16 +18,16 @@ export default class Help implements Command {
         .addStringOption(o => o.setName("command").setDescription("The command for help with").setRequired(false));
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
-        let cmd = BOT.commands.get(interaction.options.getString("command")) || null;
+        let cmd = BOT.commands.get(interaction.options.getString("command")!) || null;
 
         if (cmd == null) {
             interaction.reply({
-                embeds: [this.getGeneralEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor, BOT)],
+                embeds: [this.getGeneralEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me!.displayHexColor, BOT)],
                 ephemeral: true
             });
         } else {
             interaction.reply({
-                embeds: [this.getCommandEmbed(cmd, !interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor)],
+                embeds: [this.getCommandEmbed(cmd, !interaction.guild ? 0x8c3d1e : interaction.guild.me!.displayHexColor)],
                 ephemeral: true
             });
         }

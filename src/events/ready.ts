@@ -7,7 +7,7 @@ import { Presence } from "@/config";
  */
 export default function(BOT: Bot): void {
     // Set the bot's presence
-    BOT.client.user.setPresence({
+    BOT.client.user!.setPresence({
         status: Presence.status,
         activities: [{
             name: Presence.activity,
@@ -15,5 +15,5 @@ export default function(BOT: Bot): void {
         }],
     });
 
-    console.log(`${BOT.client.user.username} is online.`);
+    console.log(`${BOT.client.user!.username} is online.`);
 }
