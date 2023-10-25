@@ -6,10 +6,10 @@ export function ParseDurationAsMS(duration: string): number {
         throw "Cannot parse duration";
     }
 
-    let parsed = duration.match(durationRE).groups;
-    let num = Number.parseFloat(parsed.num);
+    let parsed = duration.match(durationRE)!.groups;
+    let num = Number.parseFloat(parsed!.num);
 
-    switch (parsed.fix) {
+    switch (parsed!.fix) {
         case 's':
             return 1000 * num;
         case 'm':

@@ -21,15 +21,15 @@ export default class Mute implements Command {
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         const user = interaction.options.getUser("user", true);
-        interaction.guild.members.fetch(user).then(member => {
-            if (member.id == interaction.member.user.id)
+        interaction.guild!.members.fetch(user).then(member => {
+            if (member.id == interaction.member!.user.id)
                 return void (interaction.reply({ content: "😂 You can't mute yourself silly!", ephemeral: true }));
 
             if (!member.moderatable)
                 return void (interaction.reply({ content: "I cannot mute that user!", ephemeral: true }));
 
-            const invoker = interaction.guild.members.cache.get(interaction.member.user.id);
-            if (member.roles.highest.comparePositionTo(invoker.roles.highest) >= 0)
+            const invoker = interaction.guild!.members.cache.get(interaction.member!.user.id);
+            if (member.roles.highest.comparePositionTo(invoker!.roles.highest) >= 0)
                 return void (interaction.reply({ content: "You don\'t have adequate permissions to mute that user!", ephemeral: true }));
 
             try {

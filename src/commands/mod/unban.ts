@@ -19,15 +19,15 @@ export default class Unban implements Command {
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         const user = interaction.options.getUser("user", true);
-        interaction.guild.members.fetch(user).then(member => {
+        interaction.guild!.members.fetch(user).then(member => {
 
             if (!member)
                 return void (interaction.reply({ content: "That user doesn't exist!", ephemeral: true }));
 
             const reason = interaction.options.getString("reason", false) || "No reason provided";
-            interaction.guild.bans.fetch(member)
-                .then(ban => interaction.guild.members.unban(member, reason)
-                    .then(u => interaction.reply(`Unbanned \`${u.tag}\` with reason: \`${reason}\``))
+            interaction.guild!.bans.fetch(member)
+                .then(ban => interaction.guild!.members.unban(member, reason)
+                    .then(u => interaction.reply(`Unbanned \`${u!.tag}\` with reason: \`${reason}\``))
                     .catch(() => interaction.reply({ content: "An unexpected error occured, please try again.", ephemeral: true })))
                 .catch(() => interaction.reply({ content: "That user is not banned!", ephemeral: true }));
         });

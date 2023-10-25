@@ -19,12 +19,12 @@ export default class Unmute implements Command {
 
     executeSlash(interaction: CommandInteraction<CacheType>, BOT: Bot): void {
         const user = interaction.options.getUser("user", true);
-        interaction.guild.members.fetch(user).then(member => {
+        interaction.guild!.members.fetch(user).then(member => {
             if (!member.moderatable)
                 return void (interaction.reply({ content: "I cannot unmute that user!", ephemeral: true }));
 
-            const invoker = interaction.guild.members.cache.get(interaction.member.user.id);
-            if (member.roles.highest.comparePositionTo(invoker.roles.highest) >= 0)
+            const invoker = interaction.guild!.members.cache.get(interaction.member!.user.id);
+            if (member.roles.highest.comparePositionTo(invoker!.roles.highest) >= 0)
                 return void (interaction.reply({ content: "You don\'t have adequate permissions to unmute that user!", ephemeral: true }));
 
             const reason = interaction.options.getString("reason", false) || "No reason provided";

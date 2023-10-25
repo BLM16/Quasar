@@ -17,7 +17,7 @@ export default class Info implements Command {
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         interaction.reply({
-            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor)]
+            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me!.displayHexColor)]
         });
     }
 

@@ -17,7 +17,7 @@ export default class Ping implements Command {
 
     executeSlash(interaction: CommandInteraction, BOT: Bot): void {
         interaction.reply({
-            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me.displayHexColor, interaction.createdTimestamp, BOT)],
+            embeds: [this.getEmbed(!interaction.guild ? 0x8c3d1e : interaction.guild.me!.displayHexColor, interaction.createdTimestamp, BOT)],
             ephemeral: true
         });
     }
